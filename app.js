@@ -1,27 +1,36 @@
-const express = require("express");
-const app = express();
-const userRoute = require("./routes/userRoutes");
-const taskRoute = require("./routes/taskRoutes");
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
+import express from "express";
+import userRouter from "./routes/user.js";
+import taskRouter from "./routes/task.js";
+import { config } from "dotenv";
+import cookieParser from "cookie-parser";
+import { errorMiddleware } from "./middlewares/error.js";
+import cors from "cors";
 
+export const app = express();
 
-//using middleware
+config({
+    path: "./data/config.env",
+});
+
+// Using Middlewares
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-    origin: [process.env.FRONTEND_URL],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-}));
+app.use(
+    cors({
+        origin: [process.env.FRONTEND_URL],
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        credentials: true,
+    })
+);
 
-// Using Routes 
-app.use("/api/v1/users", userRoute);
-app.use("/api/v1/task", taskRoute);
+// Using routes
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/task", taskRouter);
 
 app.get("/", (req, res) =>
 {
-    res.send("Nice Working");
-})
+    res.send("Nice working");
+});
 
-module.exports = app
+// Using Error Middleware
+app.use(errorMiddleware);

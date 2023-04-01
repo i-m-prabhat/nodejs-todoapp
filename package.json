@@ -2,16 +2,15 @@
   "name": "nodeapi",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
+  "type": "module",
   "engines": {
     "node": ">=14.20.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "set NODE_ENV=Production&& node server.js",
     "dev": "set NODE_ENV=Development&& nodemon server.js"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {

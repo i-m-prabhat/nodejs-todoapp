@@ -1,7 +1,7 @@
-const UserModel = require("../models/UserModel");
-const jwt = require("jsonwebtoken");
+import { User } from "../models/user.js";
+import jwt from "jsonwebtoken";
 
-const isAuthenticated = async (req, res, next) =>
+export const isAuthenticated = async (req, res, next) =>
 {
     const { token } = req.cookies;
 
@@ -12,8 +12,7 @@ const isAuthenticated = async (req, res, next) =>
         });
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = await UserModel.findById(decoded._id);
-    next();
-}
 
-module.exports = isAuthenticated
+    req.user = await User.findById(decoded._id);
+    next();
+};

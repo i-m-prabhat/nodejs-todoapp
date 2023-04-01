@@ -1,12 +1,11 @@
-require("dotenv").config();
-const port = process.env.PORT || 5000
-const app = require("./app.js")
-const databaseDB = require("./data/database.js");
+import { app } from "./app.js";
+import { connectDB } from "./data/database.js";
 
+connectDB();
 
-databaseDB();
-
-app.listen(port, () =>
+app.listen(process.env.PORT, () =>
 {
-    console.log(`Server started on port ${port} in ${process.env.NODE_ENV} Mode`);
-})
+    console.log(
+        `Server is working on port:${process.env.PORT} in ${process.env.NODE_ENV} Mode`
+    );
+});
